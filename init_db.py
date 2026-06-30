@@ -14,6 +14,10 @@ with app.app_context():
             password="123",
             administrator="1",
         )
+
+        # user1.password = "123"  # ← setterがある前提
+        # user1.administrator = True  # ← boolに変更
+
         db.session.add(user1)
         db.session.commit()
         print("User created")
