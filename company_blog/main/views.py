@@ -171,6 +171,10 @@ def index():
     # 　カテゴリの取得
     blog_categories = BlogCategory.query.order_by(BlogCategory.id.asc()).all()
 
+    # ✅ ここを追加（これが①）
+    recent_blog_posts = recent_blog_posts or []
+    blog_categories = blog_categories or []
+
     return render_template(
         "index.html",
         blog_posts=blog_posts,

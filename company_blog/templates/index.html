@@ -30,7 +30,11 @@
       <!-- ブログ投稿 -->
       <section id="blog_post">
         <div class="row">
-          {% for post in blog_posts.items %}
+          <!-- {% for post in blog_posts.items %} -->
+
+          {% if blog_posts and blog_posts.items %} {% for post in
+          blog_posts.items %}
+
           <div class="col-md-6 mb-4">
             <div class="card h-100">
               <div class="card-body" style="max-height: 26rem">
@@ -55,7 +59,8 @@
                 </h3>
                 <p>
                   {{ post.date.strftime('%Y-%m-%d')}} by: {{
-                  post.author.username | truncate(10) }}
+                  post.author.username | truncate(10) if post.author else
+                  "Unknown"}}
                 </p>
                 <p class="card-text">{{ post.summary | truncate(40) }}</p>
                 <a
@@ -66,7 +71,9 @@
               </div>
             </div>
           </div>
-          {% endfor %}
+          {% endfor %} {% else %}
+          <p>まだ記事がありません</p>
+          {% endif %}
         </div>
       </section>
     </div>
@@ -104,7 +111,8 @@
           </h4>
           <hr />
           <ol class="list-unstyled">
-            {% for recent_post in recent_blog_posts %}
+            {% if recent_blog_posts %} {% for recent_post in recent_blog_posts
+            %}
             <li>
               <a
                 href="{{ url_for('main.blog_post',blog_post_id=recent_post.id)}}"
@@ -122,7 +130,7 @@
               </a>
             </li>
             <hr />
-            {% endfor %}
+            {% endfor %} {% endif %}
           </ol>
         </div>
 
@@ -133,7 +141,7 @@
           </h4>
           <hr />
           <ol class="list-unstyled">
-            {% for blog_category in blog_categories %}
+            {% if blog_categories %} {% for blog_category in blog_categories %}
             <li>
               <a
                 href="{{ url_for('main.category_posts',blog_category_id=blog_category.id) }}"
@@ -145,7 +153,7 @@
               >
             </li>
             <hr />
-            {% endfor %}
+            {% endfor %}{% endif %}
           </ol>
         </div>
       </div>
