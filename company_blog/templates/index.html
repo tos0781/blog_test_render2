@@ -58,8 +58,8 @@
                   </a>
                 </h3>
                 <p>
-                  {{ post.date.strftime('%Y-%m-%d')}} by: {{
-                  post.author.username | truncate(10) if post.author else
+                  {{ post.date.strftime('%Y-%m-%d') if post.date else "" }} by:
+                  {{ post.author.username | truncate(10) if post.author else
                   "Unknown"}}
                 </p>
                 <p class="card-text">{{ post.summary | truncate(40) }}</p>
@@ -177,7 +177,7 @@
         >
           <a
             class="page-link"
-            href="{% if blog_posts.has_prev %}{{ url_for('main.index', page=blog_posts.prev_num)}}{% else %}#{% endif %}"
+            href="{% if blog_posts and blog_posts.has_prev %}{{ url_for('main.index', page=blog_posts.prev_num)}}{% else %}#{% endif %}"
             >前へ</a
           >
         </li>
@@ -213,7 +213,7 @@
         >
           <a
             class="page-link"
-            href="{% if blog_posts.has_next %}{{ url_for('main.index', page=blog_posts.next_num)}}{% else %}#{% endif %}"
+            href="{% if blog_posts and blog_posts.has_next %}{{ url_for('main.index', page=blog_posts.next_num)}}{% else %}#{% endif %}"
             >次へ</a
           >
         </li>
