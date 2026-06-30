@@ -6,6 +6,12 @@ from flask_login import LoginManager
 
 app = Flask(__name__)  # FlaskFormを使用するための設定
 
+from company_blog import db  # すでにあるなら不要
+
+with app.app_context():
+    db.create_all()
+
+
 app.config["SECRET_KEY"] = "mysecretkey"
 # 通常はこのように秘密鍵をコーディングすることはないが、わかりやすいようにコーディングしておく
 
