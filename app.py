@@ -1,4 +1,8 @@
-from company_blog import app
+from company_blog import app, db
+
+with app.app_context():
+    db.create_all()
+
 
 if __name__ == "__main__":
     app.run()
