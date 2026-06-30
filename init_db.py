@@ -1,5 +1,5 @@
 from company_blog import app, db
-from company_blog.models import User
+from company_blog.models import User, BlogCategory
 
 with app.app_context():
     db.create_all()
@@ -21,7 +21,16 @@ with app.app_context():
         db.session.add(user1)
         db.session.commit()
         print("User created")
-    else:
-        print("User already exists")
+
+    # ✅ カテゴリ（これ追加！！）
+    existing_category = BlogCategory.query.first()
+
+    if not existing_category:
+        category1 = BlogCategory(category="Test Category")
+        db.session.add(category1)
+        print("Category created")
+
+    db.session.commit()
+
 
 print("DB initialized")
