@@ -15,6 +15,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 #     basedir, "data.sqlite"
 # )
 uri = os.environ.get("DATABASE_URL")
+print("DEBUG DATABASE_URL =", uri, flush=True)
 
 if uri:
     if uri.startswith("postgres://"):
