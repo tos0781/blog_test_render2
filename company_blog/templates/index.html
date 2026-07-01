@@ -31,48 +31,34 @@
       <section id="blog_post">
         <div class="row">
           <!-- {% for post in blog_posts.items %} -->
-
-          {% if blog_posts and blog_posts.items %} {% for post in
-          blog_posts.items %}
-
-          <div class="col-md-6 mb-4">
-            <div class="card h-100">
-              <div class="card-body" style="max-height: 26rem">
-                {% if post.featured_image %}
-                <div class="mb-3" style="text-align: center">
-                  <img
-                    src="{{ post.featured_image }}"
-                    class="img-fluid card-img-top"
-                    style="max-height: 10rem"
-                  />
+          {% if blog_posts and blog_posts.items %}
+            {% for post in blog_posts.items %}
+              <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                  <div class="card-body" style="max-height: 26rem">
+                    {% if post.featured_image %}
+                    <div class="mb-3" style="text-align: center">
+                      <img src="{{ post.featured_image }}" class="img-fluid card-img-top" style="max-height: 10rem"/>
+                    </div>
+                    {% endif %}
+                    <h3>
+                      <a href="{{ url_for('main.blog_post',blog_post_id=post.id)}}"class="card-title text-decoration-none">
+                        <span class="fst-italic">{{ post.title | truncate(14) }}</span>
+                      </a>
+                    </h3>
+                    <p>
+                      {{ post.date.strftime('%Y-%m-%d') if post.date else "" }} by:
+                      {{ post.author.username | truncate(10) if post.author else
+                      "Unknown"}}
+                    </p>
+                    <p class="card-text">{{ post.summary | truncate(40) }}</p>
+                    <a href="{{ url_for('main.blog_post',blog_post_id=post.id) }}" class="btn btn-dark">続きを読む…</a>
+                  </div>
                 </div>
-                {% endif %}
-                <h3>
-                  <a
-                    href="{{ url_for('main.blog_post',blog_post_id=post.id)}}"
-                    class="card-title text-decoration-none"
-                  >
-                    <span class="fst-italic"
-                      >{{ post.title | truncate(14) }}</span
-                    >
-                  </a>
-                </h3>
-                <p>
-                  {{ post.date.strftime('%Y-%m-%d') if post.date else "" }} by:
-                  {{ post.author.username | truncate(10) if post.author else
-                  "Unknown"}}
-                </p>
-                <p class="card-text">{{ post.summary | truncate(40) }}</p>
-                <a
-                  href="{{ url_for('main.blog_post',blog_post_id=post.id) }}"
-                  class="btn btn-dark"
-                  >続きを読む…</a
-                >
               </div>
-            </div>
-          </div>
-          {% endfor %} {% else %}
-          <p>まだ記事がありません</p>
+            {% endfor %}
+          {% else %}
+            <p>まだ記事がありません</p>
           {% endif %}
         </div>
       </section>
@@ -82,15 +68,8 @@
       <div class="position-sticky" style="top: 2rem">
         <!-- 検索欄 -->
         <div class="container-fluid mb-3">
-          <form
-            action="{{ url_for('main.search') }}"
-            class="d-flex"
-            method="POST"
-          >
-            {{ form.hidden_tag() }} {{
-            render_field(form.searchtext,class="form-control
-            me-2",placeholder="検索するテキストを入力" ) }} {{
-            form.submit(class="btn btn-outline-success")}}
+          <form action="{{ url_for('main.search') }}" class="d-flex" method="POST">
+            {{ form.hidden_tag() }} {{ render_field(form.searchtext,class="form-control me-2",placeholder="検索するテキストを入力" ) }} {{form.submit(class="btn btn-outline-success")}}
           </form>
         </div>
 
@@ -111,26 +90,19 @@
           </h4>
           <hr />
           <ol class="list-unstyled">
-            {% if recent_blog_posts %} {% for recent_post in recent_blog_posts
-            %}
-            <li>
-              <a
-                href="{{ url_for('main.blog_post',blog_post_id=recent_post.id)}}"
-                class="text-decoration-none"
-              >
-                {% if recent_post.featured_image %}
-                <img
-                  src="{{ recent_post.featured_image }}"
-                  class="img-fluid"
-                  width="90"
-                  height="50"
-                />
-                {% endif %}
-                <span class="ms-2">{{ recent_post.title | truncate(14) }}</span>
-              </a>
-            </li>
-            <hr />
-            {% endfor %} {% endif %}
+            {% if recent_blog_posts %}
+              {% for recent_post in recent_blog_posts %}
+                <li>
+                  <a href="{{ url_for('main.blog_post',blog_post_id=recent_post.id)}}" class="text-decoration-none">
+                    {% if recent_post.featured_image %}
+                    <img src="{{ recent_post.featured_image }}" class="img-fluid" width="90" height="50"/>
+                    {% endif %}
+                    <span class="ms-2">{{ recent_post.title | truncate(14) }}</span>
+                  </a>
+                </li>
+                <hr />
+              {% endfor %}
+            {% endif %}
           </ol>
         </div>
 
@@ -141,19 +113,15 @@
           </h4>
           <hr />
           <ol class="list-unstyled">
-            {% if blog_categories %} {% for blog_category in blog_categories %}
-            <li>
-              <a
-                href="{{ url_for('main.category_posts',blog_category_id=blog_category.id) }}"
-                class="text-decoration-none"
-              >
-                <span class="ms-2"
-                  >{{ blog_category.category | truncate(20) }}</span
-                ></a
-              >
-            </li>
-            <hr />
-            {% endfor %}{% endif %}
+            {% if blog_categories %}
+              {% for blog_category in blog_categories %}
+                <li>
+                  <a href="{{ url_for('main.category_posts',blog_category_id=blog_category.id) }}"class="text-decoration-none">
+                    <span class="ms-2">{{ blog_category.category | truncate(20) }}</span></a>
+                </li>
+                <hr />
+              {% endfor %}
+            {% endif %}
           </ol>
         </div>
       </div>
@@ -161,29 +129,12 @@
   </div>
   <div class="row mb-2">
     <!-- navbar -->
-    <nav class="my-2" aria-label="Page navigation">
+    <!-- <nav class="my-2" aria-label="Page navigation">
       <ul class="pagination justify-content-center">
-        <li
-          {%
-          if
-          blog_posts.has_prev
-          %}class="page-item"
-          {%
-          else
-          %}class="page-item disabled"
-          {%
-          endif
-          %}
-        >
-          <a
-            class="page-link"
-            href="{% if blog_posts and blog_posts.has_prev %}{{ url_for('main.index', page=blog_posts.prev_num)}}{% else %}#{% endif %}"
-            >前へ</a
-          >
+        <li {% if blog_posts.has_prev %} class="page-item"{% else %} class="page-item disabled"
+          {% endif %}><a class="page-link" href="{% if blog_posts and blog_posts.has_prev %}{{ url_for('main.index', page=blog_posts.prev_num)}}{% else %}#{% endif %}">前へ</a>
         </li>
-        {% for page_num in blog_posts.iter_pages(left_edge=1, right_edge=1,
-        left_current=1, right_current=2) %} {% if page_num %} {% if
-        blog_posts.page == page_num %}
+        {% for page_num in blog_posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %} {% if page_num %} {% if blog_posts.page == page_num %}
         <li class="page-item disabled">
           <a class="page-link" href="#">{{ page_num }}</a>
         </li>
@@ -199,24 +150,56 @@
         </li>
         {% endif %} {% endfor %}
 
-        <li
-          {%
-          if
-          blog_posts.has_next
-          %}class="page-item"
-          {%
-          else
-          %}class="page-item disabled"
-          {%
-          endif
-          %}
-        >
-          <a
-            class="page-link"
-            href="{% if blog_posts and blog_posts.has_next %}{{ url_for('main.index', page=blog_posts.next_num)}}{% else %}#{% endif %}"
-            >次へ</a
-          >
+        <li {% if blog_posts.has_next %}class="page-item"{% else %}class="page-item disabled"{% endif %}><a class="page-link" href="{% if blog_posts and blog_posts.has_next %}{{ url_for('main.index', page=blog_posts.next_num)}}{% else %}#{% endif %}">次へ</a>
         </li>
+      </ul>
+    </nav> -->
+    <!-- navbar -->
+    <nav class="my-2" aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+
+        <!-- 前へ -->
+        {% if blog_posts and blog_posts.has_prev %}
+          <li class="page-item">
+            <a class="page-link" href="{{ url_for('main.index', page=blog_posts.prev_num) }}">前へ</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" href="#">前へ</a>
+          </li>
+        {% endif %}
+
+        <!-- ページ番号 -->
+        {% if blog_posts %}
+          {% for page_num in blog_posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if page_num %}
+              {% if blog_posts.page == page_num %}
+                <li class="page-item disabled">
+                  <a class="page-link" href="#">{{ page_num }}</a>
+                </li>
+              {% else %}
+                <li class="page-item">
+                  <a class="page-link" href="{{ url_for('main.index', page=page_num) }}">{{ page_num }}</a>
+                </li>
+              {% endif %}
+            {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" href="#">&hellip;</a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+
+        <!-- 次へ -->
+        {% if blog_posts and blog_posts.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="{{ url_for('main.index', page=blog_posts.next_num) }}">次へ</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" href="#">次へ</a>
+          </li>
+        {% endif %}
       </ul>
     </nav>
   </div>
