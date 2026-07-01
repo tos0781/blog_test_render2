@@ -17,21 +17,16 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 uri = os.environ.get("DATABASE_URL")
 print("DEBUG DATABASE_URL =", uri, flush=True)
 
-if uri:
-    if uri.startswith("postgres://"):
-        uri = uri.replace("postgres://", "postgresql://", 1)
-    app.config["SQLALCHEMY_DATABASE_URI"] = uri
-else:
-    # app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:im1046@localhost"
-    # ローカル用（SQLite）
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(
-        basedir, "data.sqlite"
-    )
+
+if not uri:
+    raise Exception("DATABASE_URLが設定されていません")
+
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = uri
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-# # ★★★ ここに追加 ★★★
-# print("DB URI =", app.config["SQLALCHEMY_DATABASE_URI"], flush=True)
 
 
 db = SQLAlchemy(app)
