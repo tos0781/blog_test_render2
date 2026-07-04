@@ -35,11 +35,21 @@
                     <li class="nav-item">
                         <a class="nav-link {% if request.endpoint == 'main.inquiry' %}active{% endif %}" href="{{ url_for('main.inquiry') }}">お問い合わせ</a>
                     </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'main.inquiry' %}active{% endif %}" href="{{ url_for('users.login') }}">ログイン</a>
+                    </li> -->
+                </ul>
+                
+                <ul class="navbar-nav ms-auto">
+                    {% if not current_user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link {% if request.endpoint == 'main.inquiry' %}active{% endif %}" href="{{ url_for('users.login') }}">ログイン</a>
                     </li>
+                    {% endif %}
                 </ul>
+
                 <br>
+                
                 <ul class="navbar-nav ms-auto">
                     {% if current_user.is_authenticated %}
                     <li class="nav-item">
