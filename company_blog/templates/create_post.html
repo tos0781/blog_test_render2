@@ -31,10 +31,11 @@
                                     CKEDITOR.replace('text');
                                 </script> -->
                                 <script>
-                                    tinymce.init({
-                                        selector: '#text',
-                                        height: 500
+                                $(document).ready(function() {
+                                    $('#text').summernote({
+                                        height: 400
                                     });
+                                });
                                 </script>
                             </div>
 
