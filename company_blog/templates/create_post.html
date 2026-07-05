@@ -27,8 +27,14 @@
                             <div class="mb-3">
                                 {{ form.text.label(class="form-control-label") }}
                                 {{ render_field(form.text, class="form-control form-contol-lg") }}
-                                <script>
+                                <!-- <script>
                                     CKEDITOR.replace('text');
+                                </script> -->
+                                <script>
+                                    tinymce.init({
+                                        selector: '#text',
+                                        height: 500
+                                    });
                                 </script>
                             </div>
 
