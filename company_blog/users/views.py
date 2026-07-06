@@ -51,7 +51,6 @@ def logout():
 
 
 @users.route("/register", methods=["GET", "POST"])
-@login_required
 def register():
     form = RegisterForm()
     if not current_user.is_administrator():
