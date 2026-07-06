@@ -18,6 +18,12 @@
                                 placeholder="パスワード") }}
                             </div>
                             {{ form.submit(class_="btn btn-outline-light w-100", value="ログイン") }}
+                            <div class="mt-3">
+                                <small>
+                                    アカウントをお持ちでない方は
+                                    <a href="{{ url_for('users.register') }}" class="text-white">こちら</a>
+                                </small>
+                            </div>
                         </form>
                     </div>
                 </div>
