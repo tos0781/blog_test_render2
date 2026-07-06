@@ -53,8 +53,9 @@ def logout():
 @users.route("/register", methods=["GET", "POST"])
 def register():
     form = RegisterForm()
-    if not current_user.is_administrator():
-        abort(403)
+    # if not current_user.is_administrator():
+    #     abort(403)
+    
     if form.validate_on_submit():
         # session["email"] = form.email.data
         # session["username"] = form.username.data
