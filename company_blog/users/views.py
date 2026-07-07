@@ -69,7 +69,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash("ユーザーが登録されました")
-        return redirect(url_for("users/login.html"))
+        return redirect(url_for("users.login"))
     return render_template("users/register.html", form=form)
 
 
